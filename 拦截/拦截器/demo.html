@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <title>Request Recover Example</title>
+    <meta charset="utf-8"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+</head>
+
+<body ng-app="myApp">
+<div ng-controller="myCtrl" class="result">
+  <span ng-bind="requestStatus"></span>.
+    <span ng-if="isRecovered">(Request was recovered)</span>
+</div>
+
+<script type="text/javascript">
+    var module = angular.module('myApp', []);
+
+//    声明一个拦截器，为了先制造错误
+    module.factory('requestRejector', ['$q', function($q) {
+//        拦截请求
+        var rejectObject = {
+            request: function(config) {
+//                创建一个拒绝对象
+                return $q.reject('rejectObj');
+            }
+        };
+        return rejectObject;
+    }]);
+
+
+//    声明一个拦截器，目地发现上面的错误
+    module.factory('requestRecoverer', ['$q', '$rootScope', function($q, $rootScope) {
+//        拦截请求异常
+        var requestRecoverer = {
+            requestError: function(rejectReason) {
+                if (rejectReason === 'rejectObj') {
+                    $rootScope.isRecovered = true;
+                    // Recover the request
+                    return {
+                        transformRequest: [],
+                        transformResponse: [],
+                        method: 'GET',
+                        url: 'https://api.github.com/users/naorye/repos',
+                        headers: {
+                            Accept: 'application/json, text/plain, */*'
+                        }
+                    };
+                } else {
+                    return $q.reject(rejectReason);
+                }
+            }
+        };
+        return requestRecoverer;
+    }]);
+
+//    将声明的拦截器注册到服务中
+    module.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.interceptors.push('requestRejector');
+        // Removing 'requestRecoverer' will result to failed requesr
+        $httpProvider.interceptors.push('requestRecoverer');
+    }]);
+
+    module.controller('myCtrl', ['$scope', '$http', function($scope, $http) {
+        $http.get('https://api.github.com/users/naorye/repos').then(function() {
+            $scope.requestStatus = '请求成功';
+        }, function(rejectReason) {
+            $scope.requestStatus = '请求失败由于： ' + rejectReason;
+        });
+    }]);
+</script>
+</body>
+</html>

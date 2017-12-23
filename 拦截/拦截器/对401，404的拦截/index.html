@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body ng-app="myApp">
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script src="http://apps.bdimg.com/libs/angular-cookies/1.2.16/angular-cookies.js"></script>
+<script>
+    angular.module('myApp', [])
+        .factory('testInterce', ['$q','$injector',  function($q,$injector) {
+            var httpInterceptor = {
+                'responseError':function (response) {
+                    if(response.status ===401) {
+                        var rootScope = $injector.get('$rootScope');
+                        var state = $injector.get('$rootScope').$state.current.name;
+                        rootScope.stateBeforLogin = state;
+                        rootScope.$state.go("login");
+                        return $q.reject(response);
+                    } else if(response.status ===404) {
+                        alert("404");
+                        return $q.reject(response);
+                    }
+                },
+                'response' : function(response) {
+                    return response;
+                }
+            };
+            return httpInterceptor;
+        }])
+        .config(['$httpProvider',function ($httpProvider){
+           $httpProvider.interceptors.push('testInterce');
+        }])
+</script>
+</body>
+</html>

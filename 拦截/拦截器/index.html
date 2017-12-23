@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body ng-app="myApp">
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script src="http://apps.bdimg.com/libs/angular-cookies/1.2.16/angular-cookies.js"></script>
+<script>
+    angular.module('myApp', [])
+        .factory('testInter',['$q', function($q){
+            return {
+                request:function (config){
+                    return config;
+                },
+                requestError:function (config){
+                    return config;
+                },
+                response:function(res){
+                    return res;
+                },
+                responseError:function(res){
+                    return res;
+                }
+            }
+        }])
+        .config('$httpProvider',function($httpProvider) {
+            $httpProvider.interceptors.push('testInter');
+        })
+        .run(function ($http){
+            $http.get('http://test-routes.herokuapp.com/test/hello').then(function (res){
+                console.log(res.data.message);
+            })
+        });
+
+</script>
+</body>
+</html>

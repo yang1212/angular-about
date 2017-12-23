@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>$q服务的defer方法</title>
+</head>
+<body ng-app="myApp">
+    <div ng-controller="myCtrl">
+        {{ test }}
+    </div>
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script src="http://apps.bdimg.com/libs/angular-cookies/1.2.16/angular-cookies.js"></script>
+<script>
+    var myApp = angular.module("myApp", []);
+    myApp.controller("myCtrl",["$scope","$q",function ($scope, $q) {
+        var defer1 = $q.defer();
+        var promise1 = defer1.promise;
+        promise1.then(function(value){
+            console.log("in promise1 &#45; success");
+            console.log(value);
+            console.log("调用resolve方法时，参数是从then的第一个方法传出来的")
+        },function (value) {
+            console.log("in promise1 &#45; error");
+            console.log(value);
+            console.log("调用reject方法时，参数是从then的第二个方法传出来的")
+            },
+            function (value) {
+                console.log("in promise1 &#45; notify");
+                console.log(value);
+            })
+            .catch(function(e){
+                console.log("in promise1 &#45; catch");
+                console.log(e);
+            })
+            .finally(function (value) {
+                console.log("in promise1 &45;finally");
+                console.log(value);
+            });
+//        defer1.resolve("hello");
+//        在$q中，可以使用resolve方法，变成完成状态；使用reject方法，变成拒绝状态
+        defer1.reject("sorry hello")
+    }])
+</script>
+</body>
+</html>

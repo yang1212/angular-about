@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app>
+
+<head>
+    <meta charset="UTF-8">
+    <title>$rootScope的作用域</title>
+</head>
+<body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+<script type="text/javascript">
+//    当最外层的为$scope，或者子元素为$rootScope时，都会报错
+
+    function Bbb($rootScope) {
+        $rootScope.age = 10;
+    }
+
+    function Aaa($scope) {
+        $scope.name = 'zhang';
+    }
+</script>
+<div ng-controller="Bbb">
+    <div ng-controller="Aaa">
+        <p>{{name}}</p>
+        <p>{{age}}</p>
+    </div>
+</div>
+
+</body>
+
+</html>

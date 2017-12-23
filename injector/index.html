@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>API $injector</title>
+</head>
+<body ng-app="myApp">
+    <div ng-controller="myCtrl1">
+        <input type="button" ng-click="hello()" value="ctrl1"/>
+    </div>
+    <div ng-controller="myCtrl2">
+        <input type="button" ng-click="hello()" value="ctrl2"/>
+    </div>
+    <div ng-controller="myCtrl3">
+        <input type="button" ng-click="hello()" value="ctrl3"/>
+    </div>
+
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script src="http://apps.bdimg.com/libs/angular-cookies/1.2.16/angular-cookies.js"></script>
+<script>
+    var myApp = angular.module("myApp", []);
+    myApp.factory("hello1",function(){
+        return {
+            hello:function(){
+                console.log("hello1 service");
+            }
+        }
+    });
+    myApp.factory("hello2",function(){
+        return {
+            hello:function(){
+                console.log("hello2 service");
+            }
+        }
+    });
+//    通过angular.injector()获得注入器
+    var $injector = angular.injector();
+//    $injector.get('name') 获得依赖的服务名字
+    console.log(angular.equals($injector.get('$injector'),$injector));
+
+//    invoke方法是一个功能强大的方法，它做常用的场景就是执行自定义函数。除此之外，在执行函数时，还能传递变量给函数本身
+    console.log(angular.equals($injector.invoke(function ($injector) {
+        return $injector;
+    }),$injector));
+    $injector.invoke(function (serviceA){});
+    app.controller("myCtrl1", function ($scope,hello1,hello2){
+        $scope.hello = function() {
+            hello1.hello();
+            hello2.hello();
+        }
+    });
+    console.log($injector.annotate(myCtrl2))
+</script>
+</body>
+</html>
+
+<!--injector.has(name)-->
+<!--①has方法的作用是从注册的列表查找对应的服务，如果找到返回true，否则返回false-->
+
+<!--injector.get(name)-->
+<!--②get方法的作用是返回指定名称的服务实例，获取到服务的实例对象后，就可以直接调用服务中的属性和方法，它的调用格式如下-->
+
+<!--injector.invoke(fn,[self],[locals])-->
+<!--invoke方法是一个功能强大的方法，它做常用的场景就是执行自定义函数。除此之外，在执行函数时，还能传递变量给函数本身，他的调用格式如下-->
