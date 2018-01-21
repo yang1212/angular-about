@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body ng-app="myApp">
+  <div ng-controller="myCtrl">
+      <input type="button" value="点击" ng-click="add()"/>
+      <p>{{count}}</p>
+  </div>
+
+
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp',[]);
+    app.controller("myCtrl", function ($scope) {
+        $scope.count = 0;
+        $scope.add = function(){
+            $scope.count = $scope.count +1;
+        };
+        $scope.$watch('count',function () {
+            if($scope.count > 2){
+                alert("我已经大于2了");
+            }
+        })
+    })
+
+//   这里的变量count已经不需要var定义了，原理不是很理解
+</script>
+</body>
+</html>
+
+<!--$scope.$watch(watchObj,watchCallback,ifDeep)-->
+<!--1 watchObj: 观察的对象-->
+<!--2 watchCallback: 接受一个函数或者表达式，当watchObj发生变化时会被调用或执行-->
+<!--3 ifDeep: 一个布尔值，如果 watchObj 的类型是对象或者数组的时候, ifDeep值设置为true,-->
+<!--那么angular会检测被监控对象的每个属性是否发生了变化,而不只是检测一个简单的值.-->
