@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body ng-app="myApp">
+<div ng-controller="fatherCtrl">
+    <input type="text" ng-model="name" ng-change="nameOnChange()"/>
+    <h1>father:{{name}}</h1>
+    <div ng-controller="sonCtrl">
+        <input type="text" ng-model="name" ng-change="nameOnChange()"/>
+        <h1>son:{{name}}</h1>
+    </div>
+
+</div>
+
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp',[]);
+    app.controller("fatherCtrl", function ($scope) {
+        $scope.name = "yangfu";
+        $scope.nameOnChange = function(){
+            $scope.$broadcast('test', $scope.name);
+        }
+    });
+    app.controller("sonCtrl",function ($scope) {
+        $scope.name = "Tiboo";
+        $scope.$on('test', function(e, newName){
+            $scope.name = newName;
+        });
+    })
+</script>
+</body>
+</html>
+<!--向下广播：父作用域值改变时，子作用域随着改变。反之不成立-->

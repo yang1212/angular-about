@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body ng-app="myApp">
+    <div ng-controller="fatherCtrl">
+        <input type="text" ng-model="name" ng-change="nameOnChange()"/>
+        <h1>father:{{name}}</h1>
+        <div ng-controller="sonCtrl">
+            <input type="text" ng-model="name" ng-change="nameOnChange()"/>
+            <h1>son:{{name}}</h1>
+        </div>
+
+    </div>
+
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp',[]);
+    app.controller("fatherCtrl", function ($scope) {
+        $scope.name = "yangfu";
+
+    });
+    app.controller("sonCtrl",function ($scope) {
+//        当子作用域中没有定义name时，将使用父作用域中的name;
+        $scope.name = "Tiboo";
+    })
+</script>
+</body>
+</html>
+
+<!--Angular 控制器中的 $scope 在各作用域之间遵循 JS 的对象原型继承方式-->
+<!--当子作用域中没有该对象时，默认向上（父作用域）寻找；子作用域有该对象时，使用子作用域对象-->
