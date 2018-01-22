@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body ng-app="myApp">
+<div ng-controller="myCtrl">
+    <p>{{name}}</p>
+</div>
+
+
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp',[]);
+    app.controller("myCtrl", function ($scope,$timeout) {
+       $scope.name = 'Tiboo';
+       var watch = $scope.$watch('name',function (newValue,oldValue,scope) {
+           console.log(newValue + ' ' + oldValue);
+       });
+       $timeout(function () {
+            $scope.name = "hello";
+        },8000);
+    })
+</script>
+</body>
+</html>
+
+<!--$timeout指令对window.setTimeout做了一个封装，它的返回值是一个promise对象，-->
+<!--当定义的时间到了以后，这个promise对象就会被resolve，回调函数就会被执行-->
