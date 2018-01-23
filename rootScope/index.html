@@ -1,26 +1,33 @@
 <!DOCTYPE html>
-<html ng-app>
-
+<html >
 <head>
     <meta charset="UTF-8">
     <title>$rootScope的作用域</title>
 </head>
-<body>
-    <div ng-controller="Bbb">
-        <div ng-controller="Aaa">
-            <p>{{name}}</p>
-            <p>{{age}}</p>
-        </div>
+<body ng-app="myApp">
+    <div ng-controller = "aCtrl"> 
+        <p>{{name}}</p>
+        <p>{{age}}</p>
     </div>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
-    <script type="text/javascript">
-
-
+    <br>
+    <div ng-controller = "bCtrl"> 
+        <p>{{name}}</p>
+        <p>{{age}}</p>
+    </div>
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+    <script>
+       var myApp = angular.module('myApp',[]);
+       myApp.controller("aCtrl",function($rootScope, $scope){
+           $rootScope.name = "Tiboo";
+       })
+       myApp.controller("bCtrl",function($rootScope, $scope){
+           $scope.age = "22";
+       })
     </script>
 </body>
 </html>
 
-<!--目的：为了方便多个控制器中的公共数据初始化，全局作用域对象$rootScope-->
+<!--目的：为了方便多个控制器中的公共数据初始化，提供了全局作用域对象$rootScope-->
 <!--scope: 是html和单个controller之间的桥梁，数据绑定就靠他了-->
 <!--rootscope: 是各个controller中scope的桥梁，用rootscope定义的值，可以在各个controller中使用-->
 
