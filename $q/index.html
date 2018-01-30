@@ -13,9 +13,13 @@
 <script>
     var myApp = angular.module("myApp", []);
     myApp.controller("myCtrl",["$scope","$q",function ($scope, $q) {
-        var defer1 = $q.defer();
-        var promise1 = defer1.promise;
-        promise1.then(function(value){
+//      $q是Angular的一种内置服务，它可以使你异步地执行函数，并且当函数执行完成时它允许你使用函数的返回值（或异常）。
+
+        var defer = $q.defer(); //创建一个deferred实例
+        var promise = defer.promise; //通过promise属性得到一个promise对象
+
+       //promise对象负责定义回调函数
+        promise.then(function(value){
             console.log("in promise1 &#45; success");
             console.log(value);
             console.log("调用resolve方法时，参数是从then的第一个方法传出来的")
@@ -36,9 +40,11 @@
                 console.log("in promise1 &45;finally");
                 console.log(value);
             });
-//        defer1.resolve("hello");
+//        defer.resolve("hello");
 //        在$q中，可以使用resolve方法，变成完成状态；使用reject方法，变成拒绝状态
-        defer1.reject("sorry hello")
+
+//      deferred实例负责触发回调
+        defer.reject("say sorry")
     }])
 </script>
 </body>
