@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body ng-app="myApp">
+<div ng-controller="myCtrl">
+
+    <p>{{name}}</p>
+    <div class="content"  ng-controller="secondCtrl">
+        <input type="text" ng-model="name"/>
+    </div>
+</div>
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp',[]);
+    app.controller('myCtrl',function ($scope) {
+        $scope.name = 'Tiboo';
+    });
+    app.controller('secondCtrl', function ($scope){
+//        此时会沿着原型链往上找，因为定义的变量是myCtrl中的，并未定义secondCtrl,所以输入框变化时，不会影响p标签里面值的改变
+    })
+</script>
+</body>
+</html>
+
+<!--其实，并不是只有 Controller 可以创建作用域，ng-if 等指令也会（隐式地）产生新作用域。-->
+<!--总结下来就是，ng-if、 ng-switch 、 ng-include 等会动态创建一块界面的东西，都是自带一级作用域。-->
+<!--因此，在开发过程中，为了避免模板中的变量歧义，应当尽可能使用命名限定，比如 data.x，出现歧义的可能性就比单独的 x 要少得多。-->
+
+<!--总结-->
+
+<!--始终将页面中的元素绑定到对象的属性（data.x）而不是 直接绑定到基本变量（x）上。-->
