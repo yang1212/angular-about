@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body ng-app="myApp">
+<div ng-controller="myCtrl">
+    <p>{{num}}</p>
+</div>
+<div ng-controller="secondCtrl">
+    <p>{{age}}</p>
+</div>
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp',[]);
+    app.factory("filterName", [function () {   //[function(){...}] ---- []不要写漏
+        return {
+            getUser:function (num) {          //getUser:function(){..} ----这样写方法的意义何在
+            if(num.length > 10){
+                this.num = num.split('0061')[1];
+                return this.num;
+            }else{
+                this.num = num.split('00')[1];
+                return this.num;
+            }
+          }
+        }
+    }]);
+    app.controller("myCtrl", function ($scope, filterName) {
+        $scope.num = filterName.getUser('0061123456789');
+    });
+    app.controller("secondCtrl", function ($scope, filterName) {
+        $scope.age = filterName.getUser('0011123');
+    });
+</script>
+</body>
+</html>

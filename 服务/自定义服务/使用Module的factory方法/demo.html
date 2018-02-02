@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body ng-app="myApp">
+<div ng-controller="myCtrl">
+    <p>{{num}}</p>
+</div>
+<div ng-controller="secondCtrl">
+    <p>{{age}}</p>
+</div>
+
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp',[]);
+    // factory 就是创建一个对象，为这个对象创建属性或方法，然后返回这个对象
+
+    app.factory("filterName", function () {
+        var list = {};
+        list.getUser = function (num) {
+            if(num.length > 10){
+                num = num.split('0061')[1];
+                return num;
+            }else{
+                num = num.split('00')[1];
+                return num;
+            }
+        };
+        return list;
+    });
+    app.controller("myCtrl", function ($scope, filterName) {
+        $scope.num = filterName.getUser('0061123456789');
+    });
+    app.controller("secondCtrl", function ($scope, filterName) {
+        $scope.age = filterName.getUser('0022');
+    });
+</script>
+</body>
+</html>

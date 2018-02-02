@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body ng-app="myApp">
+<div ng-controller="myCtrl">
+    <p>{{num}}</p>
+</div>
+<div ng-controller="secondCtrl">
+    <p>{{age}}</p>
+</div>
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp',[]);
+    app.service("filterName", function () {
+        this.getUser = function (num) {
+           if(num.length > 10){
+               this.num = num.split('0061')[1];
+               return this.num;                   //必须要有返回值，返回的值是处理后的变量（不然值不会改动）
+           }else{
+               this.num = num.split('00')[1];
+               return this.num;
+           }
+        }
+    });
+    app.controller("myCtrl", function ($scope, filterName) {
+       $scope.num = filterName.getUser('0061123456789');
+    });
+    app.controller("secondCtrl", function ($scope, filterName) {
+        $scope.age = filterName.getUser('001112345');
+    })
+</script>
+</body>
+</html>
