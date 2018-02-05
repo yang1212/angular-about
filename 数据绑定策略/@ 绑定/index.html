@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8"/>
+    <title>自定义</title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <get-content style="width:100%;height: 300px;background: #eee" name="{{userName}}"></get-content>
+</div>
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp',[]);
+    app.controller('myCtrl', function($scope){
+        $scope.userName = 'Tiboo'
+    });
+
+    app.directive("getContent",function(){
+        return {
+            restrict:'AE',
+            templateUrl:'./component/getContent.html',
+            scope:{
+                name: '@'
+            }
+        }
+    })
+</script>
+</body>
+</html>
