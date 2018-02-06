@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body ng-app="myApp">
+<div ng-controller="myCtrl">
+    <p>{{name}}</p>
+</div>
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp',[]);
+    app.controller('myCtrl', function($q, $http,$scope){
+        //定义一个延迟对象，在此做了一个承诺，等待调用  ------then方法里面依次是成功，失败，进度，顺序始终保持此节奏
+       var defer = $q.defer();
+       var promise = defer.promise;
+       promise.then(function(data){
+           $scope.name = '成功' + ' '+ data;
+       },function(data){
+           $scope.name = '失败' + ' ' + data;
+       },function(data){
+           $scope.name = '进度' + ' ' + data;
+       });
+       $http({
+           method:'GET',
+           url: 'https://api.github.com/users/naorye/repos'
+       }).then(function (res) {
+           defer.resolve(res.data);                     //resolve调用第一个
+       },function(res){
+           defer.reject(res.data);                      //reject调用第二个
+       })
+    })
+</script>
+</body>
+</html>
+
+<!--https://api.github.com/users/naorye/repos-->
