@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-controller="Ctrl">
+<head>
+    <meta charset="utf-8"/>
+    <!--< link  rel = “ stylesheet ”  type = “ text / css ”  href = “ ng-img-crop.css ” >-->
+    <title>自定义</title>
+    <link rel="stylesheet" type="text/css" href="ngImgCrop-master/compile/minified/ng-img-crop.css"/>
+    <style>
+        .cropArea {
+            background: #E4E4E4;
+            overflow: hidden;
+            width:500px;
+            height:350px;
+        }
+    </style>
+</head>
+<body>
+    <div>上传图片: <input type="file" id="fileInput"/></div><br>
+    <div class="cropArea">
+        <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
+    </div>
+    <div>选中:</div>
+    <div><img ng-src="{{myCroppedImage}}"/></div>
+
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script src="ngImgCrop-master/compile/minified/ng-img-crop.js"></script>
+
+<script>
+    angular.module('app', ['ngImgCrop'])
+        .controller('Ctrl', function($scope) {
+            $scope.myImage='';
+            $scope.myCroppedImage='';
+
+            var handleFileSelect=function(evt) {
+                var file=evt.currentTarget.files[0];
+                var reader = new FileReader();
+                reader.onload = function (evt) {
+                    $scope.$apply(function($scope){
+                        $scope.myImage=evt.target.result;
+                    });
+                };
+                reader.readAsDataURL(file);
+            };
+            angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+        });
+
+</script>
+</body>
+</html>
