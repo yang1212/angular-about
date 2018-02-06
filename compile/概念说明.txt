@@ -1,0 +1,9 @@
+1 ng对页面的处理过程?
+  (1) 浏览器把HTML字符串解析成DOM结构
+  (2) ng把DOM结构给$compile，返回一个link函数
+  (3) 传入具体的scope调用这个link函数
+  (4) 得到处理后的DOM，这个DOM处理了指令，连接了数据
+
+2 $compile?
+   $compile是个编译服务,编译服务主要是为指令编译DOM元素,编译一段HTML字符串或者DOM的模板，
+   产生一个将scope和模板连接到一起的函数。
