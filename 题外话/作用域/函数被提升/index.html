@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>自定义</title>
+</head>
+<body>
+<script>
+    function test(){
+      foo();
+      bar();
+      var foo = function(){
+          alert('this wont run')
+      };
+      function bar(){
+          alert('will run')
+      }
+    }
+    test();
+</script>
+</body>
+</html>
+
+<!--主要注意的地方：带有命名的函数变量式声明，是不会提升到作用域范围内的-->
+<!--等价于：-->
+<!--function test() {-->
+<!--var foo;-->
+<!--var bar;-->
+<!--bar = function () { // function declaration, given the name 'bar'-->
+<!--alert("this will run!");-->
+<!--}-->
+
+<!--foo(); // TypeError "foo is not a function"-->
+<!--bar(); // "this will run!"-->
+
+<!--foo = function () { // function expression assigned to local variable 'foo'-->
+<!--alert("this won't run!");-->
+<!--}-->
+<!--}-->
+<!--test();-->

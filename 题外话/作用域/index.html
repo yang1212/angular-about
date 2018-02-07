@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>自定义</title>
+    </head>
+    <body>
+    <script>
+        //比如if条件语句，就不算一个独立的作用域:我们也有一种变通的方式，那就是通过自执行函数创建临时作用域:
+        function foo() {
+            var a = 1;
+            if(a){
+                (function (){
+                    var a = 2;
+                }())
+            }
+            console.log(a);
+        }
+        foo();
+    </script>
+    </body>
+</html>
