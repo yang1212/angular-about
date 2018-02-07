@@ -1,0 +1,57 @@
+*{
+    padding:0;
+    margin:0;
+}
+ .header{
+     /*width: 100%;   设置100%后，页面横向有滚动条*/
+     border-bottom:1px solid #eee;
+     height: 80px;
+     background: #3791e3;
+     line-height: 80px;
+ }
+ .header img{
+     float:left;
+     width: 10%;
+     height: 50px;
+     margin:20px 0 0 40px;
+ }
+  .header a{
+      width:100px;
+      line-height: 80px;
+      margin-left:30px;
+      color:#fff;
+      display:block;
+      float:left;
+      text-align:center;
+      font-weight: bold;
+      text-decoration: none;
+  }
+  .clear{
+      clear: both;
+  }
+  .tip{
+      width: 40%;
+      border:1px solid #eee;
+      box-shadow:5px 5px 5px #ababab;
+      margin: 50px auto;
+      padding:15px 0;
+  }
+  .tip img{
+      margin-left:19px;
+  }
+  .tip span{
+      color:gray;
+      text-align: center;
+  }
+  .btn{
+      background:#3791e3;
+      color:#fff;
+      width: 150px;
+      height: 47px;
+      border: none;
+      border-radius: 19px;
+      font-size: 17px;
+      float: right;
+      margin-right: 10px;
+  }
+

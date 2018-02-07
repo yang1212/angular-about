@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="style/style.css"/>
+</head>
+<body>
+    <div class="header">
+        <img src="images/logo-nav.png"/>
+        <a ui-sref="page1">page1</a>
+        <a ui-sref="page2">page2</a>
+        <a ui-sref="page3">page3</a>
+    </div>
+    <div class="clear"></div>
+    <div class="content" ui-view></div>
+    <div class="footer"></div>
+    <script src="../../angular-1.2.32/angular.js"></script>
+    <script src="../../angular-1.2.32/angular-ui-router.min.js"></script>
+    <script>
+        var app = angular.module('myApp',['ui.router']);
+        app.config(function ($stateProvider, $urlRouterProvider){
+            //通过$urlRouterProvider配置让子页面显示在第一个，否则默认index为打开的第一页
+
+              //$urlRouterProvider主要目的：
+                //一是建立一个默认路由，用于管理未知的URL（统一跳转到某处）。
+                //二是监听浏览器地址栏URL的变化，重定向到路由定义的状态中。
+
+            $urlRouterProvider.otherwise('/page1');
+
+            $stateProvider
+                .state('page1',{
+                    url:'/page1',
+                    templateUrl:'component/content1.html',
+                    controller: function ($scope, $state,$stateParams){
+                        $scope.change = function (){
+                            $state.go('list1');
+                            console.log($stateParams);
+                        }
+                    }
+                })
+                .state('list1',{
+                    url:'/list1',
+                    templateUrl:'component/list1.html',
+                    controller:function ($scope, $state){
+                        $scope.change = function (){
+                            $state.go('detail1')
+                        }
+                    }
+                })
+                .state('detail1',{
+                    url:'/detail1',
+                    templateUrl:'component/detail1.html'
+                })
+
+                .state('page2',{
+                    url:'/page2',
+                    templateUrl:'component/content2.html',
+                    controller: function($scope,$state){
+                        $scope.change = function (){
+                            $state.go('list2')
+                        }
+                    }
+                })
+                .state('list2',{
+                    url:'/list2',
+                    templateUrl:'component/list2.html',
+                    controller: function ($scope, $state){
+                        $scope.change = function (){
+                            $state.go('detail2');
+                        }
+                    }
+                })
+                .state('detail2',{
+                    url:'/detail2',
+                    templateUrl:'component/detail2.html'
+                })
+
+                .state('page3',{
+                    url:'/page3',
+                    templateUrl:'component/content3.html'
+                })
+        })
+    </script>
+</body>
+</html> 
+
+<!--1 $stateParams的作用？-->
+<!--状态参数-->
