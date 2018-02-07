@@ -3220,9 +3220,9 @@ HashMap.prototype = {
  *
  *   // use the injector to kick off your application
  *   // use the type inference to auto inject arguments, or use implicit injection
- *   $injector.invoke(function($rootScope, $compile, $document){
- *     $compile($document)($rootScope);
- *     $rootScope.$digest();
+ *   $injector.invoke(function($rootScope服务, $compile, $document){
+ *     $compile($document)($rootScope服务);
+ *     $rootScope服务.$digest();
  *   });
  * ```
  *
@@ -3449,7 +3449,7 @@ function annotate(fn) {
  *
  * ```js
  *   // We wish to write this (not minification / obfuscation safe)
- *   injector.invoke(function($compile, $rootScope) {
+ *   injector.invoke(function($compile, $rootScope服务) {
  *     // ...
  *   });
  *
@@ -3457,18 +3457,18 @@ function annotate(fn) {
  *   var tmpFn = function(obfuscatedCompile, obfuscatedRootScope) {
  *     // ...
  *   };
- *   tmpFn.$inject = ['$compile', '$rootScope'];
+ *   tmpFn.$inject = ['$compile', '$rootScope服务'];
  *   injector.invoke(tmpFn);
  *
  *   // To better support inline function the inline annotation is supported
- *   injector.invoke(['$compile', '$rootScope', function(obfCompile, obfRootScope) {
+ *   injector.invoke(['$compile', '$rootScope服务', function(obfCompile, obfRootScope) {
  *     // ...
  *   }]);
  *
  *   // Therefore
  *   expect(injector.annotate(
- *      ['$compile', '$rootScope', function(obfus_$compile, obfus_$rootScope) {}])
- *    ).toEqual(['$compile', '$rootScope']);
+ *      ['$compile', '$rootScope服务', function(obfus_$compile, obfus_$rootScope) {}])
+ *    ).toEqual(['$compile', '$rootScope服务']);
  * ```
  *
  * @param {Function|Array.<string|Function>} fn Function for which dependent service names need to
@@ -8400,7 +8400,7 @@ function $HttpProvider() {
      * Makes the request.
      *
      * !!! ACCESSES CLOSURE VARS:
-     * $httpBackend, defaults, $log, $rootScope, defaultCache, $http.pendingRequests
+     * $httpBackend, defaults, $log, $rootScope服务, defaultCache, $http.pendingRequests
      */
     function sendReq(config, reqData, reqHeaders) {
       var deferred = $q.defer(),
@@ -11497,11 +11497,11 @@ function $ParseProvider() {
  * asynchronous programming what `try`, `catch` and `throw` keywords are to synchronous programming.
  *
  * ```js
- *   // for the purpose of this example let's assume that variables `$q`, `scope` and `okToGreet`
+ *   // for the purpose of this example let's assume that variables `$q服务`, `scope` and `okToGreet`
  *   // are available in the current lexical scope (they could have been injected or passed in).
  *
  *   function asyncGreet(name) {
- *     var deferred = $q.defer();
+ *     var deferred = $q服务.defer();
  *
  *     setTimeout(function() {
  *       deferred.notify('About to greet ' + name + '.');
@@ -11538,7 +11538,7 @@ function $ParseProvider() {
  *
  * # The Deferred API
  *
- * A new instance of deferred is constructed by calling `$q.defer()`.
+ * A new instance of deferred is constructed by calling `$q服务.defer()`.
  *
  * The purpose of the deferred object is to expose the associated Promise instance as well as APIs
  * that can be used for signaling the successful or unsuccessful completion, as well as the status
@@ -11547,9 +11547,9 @@ function $ParseProvider() {
  * **Methods**
  *
  * - `resolve(value)` – resolves the derived promise with the `value`. If the value is a rejection
- *   constructed via `$q.reject`, the promise will be rejected instead.
+ *   constructed via `$q服务.reject`, the promise will be rejected instead.
  * - `reject(reason)` – rejects the derived promise with the `reason`. This is equivalent to
- *   resolving it with a rejection constructed via `$q.reject`.
+ *   resolving it with a rejection constructed via `$q服务.reject`.
  * - `notify(value)` - provides updates on the status of the promise's execution. This may be called
  *   multiple times before the promise is either resolved or rejected.
  *
@@ -11615,21 +11615,21 @@ function $ParseProvider() {
  * $http's response interceptors.
  *
  *
- * # Differences between Kris Kowal's Q and $q
+ * # Differences between Kris Kowal's Q and $q服务
  *
  *  There are two main differences:
  *
- * - $q is integrated with the {@link ng.$rootScope.Scope} Scope model observation
+ * - $q服务 is integrated with the {@link ng.$rootScope.Scope} Scope model observation
  *   mechanism in angular, which means faster propagation of resolution or rejection into your
  *   models and avoiding unnecessary browser repaints, which would result in flickering UI.
- * - Q has many more features than $q, but that comes at a cost of bytes. $q is tiny, but contains
+ * - Q has many more features than $q服务, but that comes at a cost of bytes. $q服务 is tiny, but contains
  *   all the important functionality needed for common async tasks.
  *
  *  # Testing
  *
  *  ```js
- *    it('should simulate promise', inject(function($q, $rootScope) {
- *      var deferred = $q.defer();
+ *    it('should simulate promise', inject(function($q服务, $rootScope服务) {
+ *      var deferred = $q服务.defer();
  *      var promise = deferred.promise;
  *      var resolvedValue;
  *
@@ -11644,7 +11644,7 @@ function $ParseProvider() {
  *      expect(resolvedValue).toBeUndefined();
  *
  *      // Propagate promise resolution to 'then' functions using $apply().
- *      $rootScope.$apply();
+ *      $rootScope服务.$apply();
  *      expect(resolvedValue).toEqual(123);
  *    }));
  *  ```
@@ -11855,7 +11855,7 @@ function qFactory(nextTick, exceptionHandler) {
    *      // handle the error and recover
    *      return newPromiseOrValue;
    *     }
-   *     return $q.reject(reason);
+   *     return $q服务.reject(reason);
    *   });
    * ```
    *
@@ -11892,7 +11892,7 @@ function qFactory(nextTick, exceptionHandler) {
    * @kind function
    *
    * @description
-   * Wraps an object that might be a value or a (3rd party) then-able promise into a $q promise.
+   * Wraps an object that might be a value or a (3rd party) then-able promise into a $q服务 promise.
    * This is useful when you are dealing with an object that might or might not be a promise, or if
    * the promise comes from a source that can't be trusted.
    *
@@ -12068,7 +12068,7 @@ function $$RAFProvider(){ //rAF
  * @name $rootScopeProvider
  * @description
  *
- * Provider for the $rootScope service.
+ * Provider for the $rootScope服务 service.
  */
 
 /**
@@ -12081,7 +12081,7 @@ function $$RAFProvider(){ //rAF
  *
  * The current default is 10 iterations.
  *
- * In complex applications it's possible that the dependencies between `$watch`s will result in
+ * In complex applications it's possible that the dependencies between `$watch服务`s will result in
  * several digest iterations. However if an application needs more than the default 10 digest
  * iterations for its model to stabilize then you should investigate what is causing the model to
  * continuously change during the digest.
@@ -12124,7 +12124,7 @@ function $RootScopeProvider(){
      * @name $rootScope.Scope
      *
      * @description
-     * A root scope can be retrieved using the {@link ng.$rootScope $rootScope} key from the
+     * A root scope can be retrieved using the {@link ng.$rootScope $rootScope服务} key from the
      * {@link auto.$injector $injector}. Child scopes are created using the
      * {@link ng.$rootScope.Scope#$new $new()} method. (Most scopes are created automatically when
      * compiled HTML template is executed.)
@@ -12137,7 +12137,7 @@ function $RootScopeProvider(){
      * # Inheritance
      * A scope can inherit from a parent scope, as in this example:
      * ```js
-         var parent = $rootScope;
+         var parent = $rootScope服务;
          var child = parent.$new();
 
          parent.salutation = "Hello";
@@ -12229,7 +12229,7 @@ function $RootScopeProvider(){
         if (isolate) {
           child = new Scope();
           child.$root = this.$root;
-          // ensure that there is just one async queue per $rootScope and its children
+          // ensure that there is just one async queue per $rootScope服务 and its children
           child.$$asyncQueue = this.$$asyncQueue;
           child.$$postDigestQueue = this.$$postDigestQueue;
         } else {
@@ -12300,18 +12300,18 @@ function $RootScopeProvider(){
        * can compare the `newVal` and `oldVal`. If these two values are identical (`===`) then the
        * listener was called due to initialization.
        *
-       * The example below contains an illustration of using a function as your $watch listener
+       * The example below contains an illustration of using a function as your $watch服务 listener
        *
        *
        * # Example
        * ```js
-           // let's assume that scope was dependency injected as the $rootScope
-           var scope = $rootScope;
+           // let's assume that scope was dependency injected as the $rootScope服务
+           var scope = $rootScope服务;
            scope.name = 'misko';
            scope.counter = 0;
 
            expect(scope.counter).toEqual(0);
-           scope.$watch('name', function(newValue, oldValue) {
+           scope.$watch服务('name', function(newValue, oldValue) {
              scope.counter = scope.counter + 1;
            });
            expect(scope.counter).toEqual(0);
@@ -12334,7 +12334,7 @@ function $RootScopeProvider(){
            var food;
            scope.foodCounter = 0;
            expect(scope.foodCounter).toEqual(0);
-           scope.$watch(
+           scope.$watch服务(
              // This is the listener function
              function() { return food; },
              // This is the change handler
@@ -12430,7 +12430,7 @@ function $RootScopeProvider(){
        * (for arrays, this implies watching the array items; for object maps, this implies watching
        * the properties). If a change is detected, the `listener` callback is fired.
        *
-       * - The `obj` collection is observed via standard $watch operation and is examined on every
+       * - The `obj` collection is observed via standard $watch服务 operation and is examined on every
        *   call to $digest() to see if any items have been added, removed, or moved.
        * - The `listener` is called whenever anything within the `obj` has changed. Examples include
        *   adding, removing, and moving items belonging to an object or array.
@@ -12619,7 +12619,7 @@ function $RootScopeProvider(){
        *
        * If you want to be notified whenever `$digest()` is called,
        * you can register a `watchExpression` function with
-       * {@link ng.$rootScope.Scope#$watch $watch()} with no `listener`.
+       * {@link ng.$rootScope.Scope#$watch $watch服务()} with no `listener`.
        *
        * In unit tests, you may need to call `$digest()` to simulate the scope life cycle.
        *
@@ -12630,7 +12630,7 @@ function $RootScopeProvider(){
            scope.counter = 0;
 
            expect(scope.counter).toEqual(0);
-           scope.$watch('name', function(newValue, oldValue) {
+           scope.$watch服务('name', function(newValue, oldValue) {
              scope.counter = scope.counter + 1;
            });
            expect(scope.counter).toEqual(0);
@@ -12844,7 +12844,7 @@ function $RootScopeProvider(){
        *
        * # Example
        * ```js
-           var scope = ng.$rootScope.Scope();
+           var scope = ng.$rootScope服务.Scope();
            scope.a = 1;
            scope.b = 2;
 
@@ -14461,9 +14461,9 @@ function $TimeoutProvider() {
       * The return value of registering a timeout function is a promise, which will be resolved when
       * the timeout is reached and the timeout function is executed.
       *
-      * To cancel a timeout request, call `$timeout.cancel(promise)`.
+      * To cancel a timeout request, call `$timeout服务.cancel(promise)`.
       *
-      * In tests you can use {@link ngMock.$timeout `$timeout.flush()`} to
+      * In tests you can use {@link ngMock.$timeout `$timeout服务.flush()`} to
       * synchronously flush the queue of deferred functions.
       *
       * @param {function()} fn A function, whose execution should be delayed.
@@ -14509,7 +14509,7 @@ function $TimeoutProvider() {
       * Cancels a task associated with the `promise`. As a result of this, the promise will be
       * resolved with a rejection.
       *
-      * @param {Promise=} promise Promise returned by the `$timeout` function.
+      * @param {Promise=} promise Promise returned by the `$timeout服务` function.
       * @returns {boolean} Returns `true` if the task hasn't executed yet and was successfully
       *   canceled.
       */

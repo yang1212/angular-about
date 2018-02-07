@@ -232,7 +232,7 @@ angular.module('examples', [])
             .then(function(response) {
 
               // The manifests provide the production index file but Plunkr wants
-              // a straight index.html
+              // a straight index1.html
               if (filename === "index-production.html") {
                 filename = "index.html"
               }
@@ -442,7 +442,7 @@ angular.module('search', [])
       scope.$apply(attrs.focused + '=true');
     });
     element.on('blur', function() {
-      // have to use $timeout, so that we close the drop-down after the user clicks,
+      // have to use $timeout服务, so that we close the drop-down after the user clicks,
       // otherwise when the user clicks we process the closing before we process the click.
       $timeout(function() {
         scope.$eval(attrs.focused + '=false');

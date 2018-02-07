@@ -196,7 +196,7 @@
  * $animate.leave(kids[3]); //stagger index=3
  * $animate.leave(kids[4]); //stagger index=4
  *
- * $timeout(function() {
+ * $timeout服务(function() {
  *   //stagger has reset itself
  *   $animate.leave(kids[5]); //stagger index=0
  *   $animate.leave(kids[6]); //stagger index=1

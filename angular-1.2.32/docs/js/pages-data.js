@@ -1234,7 +1234,7 @@ angular.module('pagesData', [])
   "api/ng/type/$rootScope.Scope": {
     "name": "$rootScope.Scope",
     "area": "api",
-    "path": "api/ng/type/$rootScope.Scope"
+    "path": "api/ng/type/$rootScope服务.Scope"
   },
   "api/ng/service/$sceDelegate": {
     "name": "$sceDelegate",

@@ -27,10 +27,10 @@
 <!--var httpInterceptor = {-->
 <!--'responseError' : function(response) {-->
 <!--if (response.status == 401) {-->
-<!--var rootScope = $injector.get('$rootScope');-->
-<!--var state = $injector.get('$rootScope').$state.current.name;-->
-<!--rootScope.stateBeforLogin = state;-->
-<!--rootScope.$state.go("login");-->
+<!--var $rootScope = $injector.get('$$rootScope');-->
+<!--var state = $injector.get('$$rootScope').$state.current.name;-->
+<!--$rootScope.stateBeforLogin = state;-->
+<!--$rootScope.$state.go("login");-->
 <!--return $q.reject(response);-->
 <!--} else if (response.status === 404) {-->
 <!--alert("404!");-->

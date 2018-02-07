@@ -482,7 +482,7 @@ angular.module('navData', [])
           },
           {
             "name": "$rootScope.Scope",
-            "href": "api/ng/type/$rootScope.Scope",
+            "href": "api/ng/type/$rootScope服务.Scope",
             "type": "type"
           },
           {
